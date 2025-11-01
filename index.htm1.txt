@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我想你了！</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+        }
+        .popup {
+            position: absolute;
+            background: #ffc0cb; /* 粉色 */
+            color: #333;
+            padding: 15px 20px;
+            font-family: "STKaiti", "KaiTi", "Microsoft YaHei", sans-serif;
+            font-size: 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            user-select: none;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const popupCount = 40; // 弹窗数量，可调整
+
+        for (let i = 0; i < popupCount; i++) {
+            const div = document.createElement('div');
+            div.className = 'popup';
+            div.textContent = '我想你了！';
+            
+            // 随机位置，避免超出屏幕
+            const x = Math.random() * (screenWidth - 180);
+            const y = Math.random() * (screenHeight - 80);
+            
+            div.style.left = `${x}px`;
+            div.style.top = `${y}px`;
+            
+            // 点击弹窗可关闭
+            div.addEventListener('click', () => {
+                div.style.opacity = '0';
+                setTimeout(() => div.remove(), 300);
+            });
+            
+            document.body.appendChild(div);
+        }
+
+        // 点击空白处关闭所有弹窗
+        document.addEventListener('click', (e) => {
+            if (e.target === document.body) {
+                document.querySelectorAll('.popup').forEach(p => {
+                    p.style.opacity = '0';
+                    setTimeout(() => p.remove(), 300);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
